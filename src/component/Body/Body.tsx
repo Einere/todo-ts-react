@@ -1,7 +1,8 @@
 import React, {FunctionComponent} from 'react';
+import BodyStyle from './Body.style';
 
 export const Body: FunctionComponent = function () {
     return (
-        <h2>body</h2>
+        <BodyStyle>body</BodyStyle>
     );
 };

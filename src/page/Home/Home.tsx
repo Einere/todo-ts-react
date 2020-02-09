@@ -1,7 +1,7 @@
 import React from 'react';
-import {Header} from '../component/Header';
-import {Body} from '../component/Body';
-import {Footer} from '../component/Footer';
+import {Header} from '../../component/Header/Header';
+import {Body} from '../../component/Body/Body';
+import {Footer} from '../../component/Footer/Footer';
 
 export default function Home() {
     return (

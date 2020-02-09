@@ -1,7 +1,8 @@
 import React, {FunctionComponent} from 'react';
+import HeaderStyle from './Header.style';
 
 export const Header: FunctionComponent = function () {
     return (
-        <h1>header</h1>
+        <HeaderStyle>TODO-TS-REACT</HeaderStyle>
     );
 };
