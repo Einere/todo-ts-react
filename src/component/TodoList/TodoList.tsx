@@ -1,4 +1,5 @@
-import React, {FunctionComponent} from 'react';
+import * as React from 'react';
+import {FunctionComponent} from 'react';
 
 export const TodoList: FunctionComponent = function () {
     return (
