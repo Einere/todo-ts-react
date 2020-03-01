@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {FunctionComponent, useCallback} from 'react';
 import {Todo} from "../todoTypes";
+import TodoItemStyle from './TodoItem.style';
 
 export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfos, todoInfo, setTodoInfos}) {
 
@@ -12,12 +13,12 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
     }, [todoInfos, todoInfo, setTodoInfos]);
 
     return (
-        <>
+        <TodoItemStyle>
             <h3>{todoInfo.title}</h3>
             <p>{todoInfo.content}</p>
             <p>{todoInfo.done ? 'O' : 'X'} / {todoInfo.dueTime.toLocaleString()}</p>
             <button onClick={toggleDone}>done</button>
             <button>delete</button>
-        </>
+        </TodoItemStyle>
     );
 };
