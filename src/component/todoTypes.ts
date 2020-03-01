@@ -5,6 +5,7 @@ export namespace Todo {
         content: string;
         createTime: Date;
         dueTime: Date;
+        done: boolean;
     }
 
     export interface TodoInputProp {
@@ -14,10 +15,13 @@ export namespace Todo {
 
     export interface TodoListProp {
         todoInfos: TodoInfoType[];
+        setTodoInfos: any;
     }
 
     export interface TodoItemProp {
+        todoInfos: TodoInfoType[];
         todoInfo: TodoInfoType;
+        setTodoInfos: any;
     }
 
     export interface TodoDetailType {

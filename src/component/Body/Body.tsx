@@ -6,7 +6,14 @@ import {TodoList} from "../TodoList/TodoList";
 import {Todo} from '../todoTypes';
 
 export const Body: FunctionComponent = function () {
-    const [todoInfos, setTodoInfos] = useState<Todo.TodoInfoType[]>([]);
+    const [todoInfos, setTodoInfos] = useState<Todo.TodoInfoType[]>([{
+        id: 0,
+        title: 'foo',
+        content: 'bar',
+        createTime: new Date(),
+        dueTime: new Date(Date.now() + 86400000),
+        done: false
+    }]);
 
     return (
         <BodyStyle>
@@ -16,6 +23,7 @@ export const Body: FunctionComponent = function () {
             />
             <TodoList
                 todoInfos={todoInfos}
+                setTodoInfos={setTodoInfos}
             />
         </BodyStyle>
     );

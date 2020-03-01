@@ -6,7 +6,7 @@ import {TodoInputContainerStyle, TodoInputFieldStyle} from "./TodoInput.style";
 function getNextId(todoInfos: Todo.TodoInfoType[]) {
     return todoInfos.reduce((acc, {id}) => {
         return acc < id ? id : acc;
-    }, 0);
+    }, -1) + 1;
 }
 
 function makeTodoInfo(id: number, title: string, content: string, dueTime: Date): Todo.TodoInfoType {
@@ -15,9 +15,11 @@ function makeTodoInfo(id: number, title: string, content: string, dueTime: Date)
         title,
         content,
         createTime: new Date(),
-        dueTime
+        dueTime,
+        done: false,
     };
 }
+
 
 export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoInfos, setTodoInfos}) {
     const [todoTitle, setTodoTitle] = useState<string>('');
@@ -28,6 +30,7 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         e.preventDefault();
 
         const nextId = getNextId(todoInfos);
+        console.log(nextId);
         const newInfo = makeTodoInfo(nextId, todoTitle, todoContent, todoDueTime);
         setTodoInfos([...todoInfos, newInfo]);
     }, [todoInfos, setTodoInfos, todoTitle, todoContent, todoDueTime]);
@@ -41,10 +44,9 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
     }, []);
 
     const onDueTimeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value);
         setTodoDueTime(new Date(e.target.value));
     }, []);
-
-    const today = new Date().toISOString().split('T')[0];
 
     return (
         <TodoInputContainerStyle>
@@ -59,7 +61,7 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
                 </TodoInputFieldStyle>
                 <TodoInputFieldStyle>
                     <label htmlFor={"todo-due-time"}>Due Time</label>
-                    <input type={"date"} name={"todo-due-time"} id={"todo-due-time"} defaultValue={today}
+                    <input type={"datetime-local"} name={"todo-due-time"} id={"todo-due-time"}
                            onChange={onDueTimeChange}/>
                 </TodoInputFieldStyle>
                 <button type={"submit"}>Add</button>
