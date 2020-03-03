@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export default styled.section`
+export default styled.header`
     font-size: 3rem;
     background-color: skyblue;
-    padding: 1rem 0;
+    height: 5rem;
     
     @media only screen and (max-width: 768px) {
       font-size: 2rem;

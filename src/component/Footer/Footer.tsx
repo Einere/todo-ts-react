@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {FunctionComponent} from 'react';
+import FooterStyle from './Footer.style';
 
 export const Footer: FunctionComponent = function () {
     return (
-        <h3>footer</h3>
+        <FooterStyle>footer</FooterStyle>
     );
 };

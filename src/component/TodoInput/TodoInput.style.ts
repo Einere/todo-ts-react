@@ -37,5 +37,9 @@ export const TodoInputFieldStyle = styled.div`
   & input {
       box-sizing: border-box;
       width: 50%;
+      
+      &.invalid {
+        border: 1px solid red;
+      }
   }
 `;
