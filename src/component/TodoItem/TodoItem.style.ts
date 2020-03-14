@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
-export default styled.article`
+interface TodoItemStyleProps {
+    readonly expired: boolean;
+    readonly done: boolean;
+}
+
+export default styled.article<TodoItemStyleProps>`
   width: 50%;
-  border: 1px solid rgba(0, 0,0, 0.2);
+  border: 1px solid ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'} ;
   border-radius: 10px;
   margin: 0.5rem 0;
   

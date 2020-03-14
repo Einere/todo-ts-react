@@ -11,7 +11,7 @@ export const Body: FunctionComponent = function () {
         title: 'foo',
         content: 'bar',
         createTime: new Date(),
-        dueTime: new Date(Date.now() + 86400000),
+        dueTime: new Date(Date.now()),
         done: false
     }]);
 

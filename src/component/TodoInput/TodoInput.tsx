@@ -67,7 +67,6 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
     }, []);
 
     const onDueTimeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value);
         setTodoDueTime(new Date(e.target.value));
     }, []);
 
