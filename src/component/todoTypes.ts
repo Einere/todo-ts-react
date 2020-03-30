@@ -16,12 +16,14 @@ export namespace Todo {
     export interface TodoListProp {
         todoInfos: TodoInfoType[];
         setTodoInfos: any;
+        deleteTodoItem: any;
     }
 
     export interface TodoItemProp {
         todoInfos: TodoInfoType[];
         todoInfo: TodoInfoType;
         setTodoInfos: any;
+        deleteTodoItem: any;
     }
 
     export interface TodoDetailType {

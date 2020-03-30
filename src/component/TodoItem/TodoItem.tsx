@@ -3,7 +3,7 @@ import {FunctionComponent, useCallback, useMemo} from 'react';
 import {Todo} from "../todoTypes";
 import TodoItemStyle from './TodoItem.style';
 
-export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfos, todoInfo, setTodoInfos}) {
+export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfos, todoInfo, setTodoInfos, deleteTodoItem}) {
 
     const toggleDone = useCallback(() => {
         const newTodoInfos = [...todoInfos];
@@ -14,15 +14,20 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
 
     const expired = useMemo<boolean>(() => {
         return todoInfo.done ? false : todoInfo.dueTime.getTime() < Date.now();
-    }, [todoInfo.done]);
+    }, [todoInfo, todoInfo.done]);
+
+    const onHandleDelete = function () {
+        deleteTodoItem(todoInfo.id);
+    };
 
     return (
         <TodoItemStyle expired={expired} done={todoInfo.done}>
             <h3>{todoInfo.title}</h3>
             <p>{todoInfo.content}</p>
-            <p>{todoInfo.done ? 'O' : 'X'} / {todoInfo.dueTime.toLocaleString()}</p>
+            <p>{todoInfo.done ? 'O' : 'X'}</p>
+            <p>{todoInfo.createTime.toLocaleString()}/{todoInfo.dueTime.toLocaleString()}</p>
             <button onClick={toggleDone}>done</button>
-            <button>delete</button>
+            <button onClick={onHandleDelete}>delete</button>
         </TodoItemStyle>
     );
 };
