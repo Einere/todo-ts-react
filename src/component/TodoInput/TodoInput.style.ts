@@ -9,7 +9,7 @@ export const TodoInputContainerStyle = styled.section`
     & form {
       margin: 1rem;
       border-radius: 10px;
-      border: 1px solid rgba(0, 0,0, 0.2);
+      border: 2px solid rgba(0, 0,0, 0.2);
       width: 50%;
       
       @media only screen and (max-width: 768px) {
