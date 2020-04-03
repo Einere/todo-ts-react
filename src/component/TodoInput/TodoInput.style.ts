@@ -42,4 +42,9 @@ export const TodoInputFieldStyle = styled.div`
         border: 1px solid red;
       }
   }
+  
+  & .rdt {
+    display: flex;
+    justify-content: center;
+  }
 `;
