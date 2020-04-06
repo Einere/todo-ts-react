@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "esModuleInterop": false,
     // can use "import React from 'react'"
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",

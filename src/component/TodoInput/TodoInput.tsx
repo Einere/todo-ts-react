@@ -2,7 +2,8 @@ import * as React from 'react';
 import {FormEvent, FunctionComponent, useCallback, useMemo, useState} from 'react';
 import {Todo} from '../todoTypes';
 import {TodoInputContainerStyle, TodoInputFieldStyle} from "./TodoInput.style";
-import DateTime from "react-datetime";
+import * as DateTime from "react-datetime";
+import * as moment from "moment";
 
 function getNextId(todoInfos: Todo.TodoInfoType[]) {
     return todoInfos.reduce((acc, {id}) => {
@@ -70,18 +71,33 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         setTodoDueTime(new Date(e.target.value));
     }, []);*/
 
+    function isMoment(m: any): m is moment.Moment {
+        return m instanceof moment;
+    }
+
+    const handleEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (e.keyCode === 13) {
+            const form = e.currentTarget.form as HTMLFormElement;
+            const index = Array.from(form).indexOf(e.target as Element);
+            (form.elements[index + 1] as HTMLElement).focus();
+        }
+    }, []);
+
     return (
         <TodoInputContainerStyle>
             <form onSubmit={formSubmit}>
                 <TodoInputFieldStyle>
                     <label htmlFor={"todo-title"}>Title</label>
-                    <input type={"string"} name={"todo-title"} id={"todo-title"} onChange={onTitleChange}
-                           className={isTitleValid ? '' : 'invalid'}/>
+                    <input type={"string"} name={"todo-title"} id={"todo-title"}
+                           className={isTitleValid ? '' : 'invalid'}
+                           onChange={onTitleChange} onKeyDown={handleEnter}/>
                 </TodoInputFieldStyle>
                 <TodoInputFieldStyle>
                     <label htmlFor={"todo-content"}>Content</label>
-                    <input type={"textarea"} name={"todo-content"} id={"todo-content"} onChange={onContentChange}
-                           className={isContentValid ? '' : 'invalid'}/>
+                    <input type={"textarea"} name={"todo-content"} id={"todo-content"}
+                           className={isContentValid ? '' : 'invalid'}
+                           onChange={onContentChange} onKeyDown={handleEnter}/>
                 </TodoInputFieldStyle>
                 <TodoInputFieldStyle>
                     {/*<label htmlFor={"todo-due-time"}>Due Time</label>*/}
@@ -93,7 +109,9 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
                         defaultValue={todoDueTime}
                         input={false}
                         onChange={(m) => {
-                            if (typeof m !== 'string') setTodoDueTime(m.toDate());
+                            // if(m instanceof moment) setTodoDueTime((m as Moment).toDate());
+                            // if (typeof m !== 'string') setTodoDueTime(m.toDate());
+                            if (isMoment(m)) setTodoDueTime(m.toDate());
                         }}
                     />
                 </TodoInputFieldStyle>
