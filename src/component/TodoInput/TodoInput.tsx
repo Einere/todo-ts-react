@@ -76,7 +76,7 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
     }
 
     const handleEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-        e.preventDefault();
+
         if (e.keyCode === 13) {
             const form = e.currentTarget.form as HTMLFormElement;
             const index = Array.from(form).indexOf(e.target as Element);

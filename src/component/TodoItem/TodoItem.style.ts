@@ -7,8 +7,9 @@ interface TodoItemStyleProps {
 
 export default styled.article<TodoItemStyleProps>`
   width: 50%;
-  border: 2px solid ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'} ;
+  border: 2px solid ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'};
   border-radius: 10px;
+  //box-shadow: 0.3rem 0.3rem 1rem ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'};
   margin: 0.5rem 0;
   transition: all 1s ease;
   
