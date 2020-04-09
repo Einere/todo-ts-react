@@ -6,7 +6,7 @@ TODO-TS-REACT는 TypeScript를 이용하여 Todo React Web App입니다.
 ## Team
 
 
-## Install & Build
+## Install & Run
 Using local file system
 
 ```bash
@@ -17,8 +17,6 @@ git clone https://github.com/Einere/todo-ts-react.git
 npm run start
 ```
 
-
-## Run
 Using Docker
 
 ```bash
