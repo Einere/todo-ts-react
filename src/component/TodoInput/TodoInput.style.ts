@@ -11,6 +11,7 @@ export const TodoInputContainerStyle = styled.section`
       border-radius: 10px;
       border: 2px solid rgba(0, 0,0, 0.2);
       width: 50%;
+      transition: all 1s ease;
       
       @media only screen and (max-width: 768px) {
         width: 80%;

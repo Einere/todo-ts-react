@@ -2,8 +2,8 @@ import * as React from 'react';
 import {FormEvent, FunctionComponent, useCallback, useMemo, useState} from 'react';
 import {Todo} from '../todoTypes';
 import {TodoInputContainerStyle, TodoInputFieldStyle} from "./TodoInput.style";
-import * as DateTime from "react-datetime";
-import * as moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function getNextId(todoInfos: Todo.TodoInfoType[]) {
     return todoInfos.reduce((acc, {id}) => {
@@ -71,10 +71,6 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         setTodoDueTime(new Date(e.target.value));
     }, []);*/
 
-    function isMoment(m: any): m is moment.Moment {
-        return m instanceof moment;
-    }
-
     const handleEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
 
         if (e.keyCode === 13) {
@@ -89,7 +85,7 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
             <form onSubmit={formSubmit}>
                 <TodoInputFieldStyle>
                     <label htmlFor={"todo-title"}>Title</label>
-                    <input type={"string"} name={"todo-title"} id={"todo-title"}
+                    <input type={"text"} name={"todo-title"} id={"todo-title"}
                            className={isTitleValid ? '' : 'invalid'}
                            onChange={onTitleChange} onKeyDown={handleEnter}/>
                 </TodoInputFieldStyle>
@@ -100,19 +96,13 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
                            onChange={onContentChange} onKeyDown={handleEnter}/>
                 </TodoInputFieldStyle>
                 <TodoInputFieldStyle>
-                    {/*<label htmlFor={"todo-due-time"}>Due Time</label>*/}
-                    {/*<input type={"datetime-local"} name={"todo-due-time"} id={"todo-due-time"}
-                           onChange={onDueTimeChange}/>*/}
-                    <DateTime
-                        dateFormat="YYYY-MM-DD"
-                        timeFormat="hh:mm"
-                        defaultValue={todoDueTime}
-                        input={false}
-                        onChange={(m) => {
-                            // if(m instanceof moment) setTodoDueTime((m as Moment).toDate());
-                            // if (typeof m !== 'string') setTodoDueTime(m.toDate());
-                            if (isMoment(m)) setTodoDueTime(m.toDate());
-                        }}
+                    <DatePicker
+                        selected={todoDueTime}
+                        onChange={date => setTodoDueTime(date!)}
+                        showTimeInput
+                        disabledKeyboardNavigation
+                        dateFormat="yyyy MM dd h:mm aa"
+                        shouldCloseOnSelect={false}
                     />
                 </TodoInputFieldStyle>
 
