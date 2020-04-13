@@ -1,9 +1,11 @@
 import * as React from 'react';
-import {FormEvent, FunctionComponent, useCallback, useMemo, useState} from 'react';
+import {FormEvent, FunctionComponent, useCallback, useEffect, useMemo, useState} from 'react';
 import {Todo} from '../todoTypes';
 import {TodoInputContainerStyle, TodoInputFieldStyle} from "./TodoInput.style";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {Button, Form} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function getNextId(todoInfos: Todo.TodoInfoType[]) {
     return todoInfos.reduce((acc, {id}) => {
@@ -44,6 +46,12 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         return isTitleValid && isContentValid;
     }, [isTitleValid, isContentValid]);
 
+    const clearForm = useCallback(() => {
+        setTodoTitle('');
+        setTodoContent('');
+        setTodoDueTime(new Date());
+    }, []);
+
     const formSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validityState) return;
@@ -51,6 +59,8 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         const nextId = getNextId(todoInfos);
         const newInfo = makeTodoInfo(nextId, todoTitle, todoContent, todoDueTime);
         setTodoInfos([...todoInfos, newInfo]);
+
+        clearForm();
     }, [todoInfos, setTodoInfos, todoTitle, todoContent, todoDueTime, validityState]);
 
     const onTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,47 +77,37 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         setTodoContent(e.target.value);
     }, []);
 
-    /*const onDueTimeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setTodoDueTime(new Date(e.target.value));
-    }, []);*/
-
-    const handleEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-
-        if (e.keyCode === 13) {
-            const form = e.currentTarget.form as HTMLFormElement;
-            const index = Array.from(form).indexOf(e.target as Element);
-            (form.elements[index + 1] as HTMLElement).focus();
-        }
-    }, []);
+    useEffect(() => {
+        setIsTitleValid(titleValidators.every(validator => validator(todoTitle)));
+        setIsContentValid(contentValidators.every(validator => validator(todoContent)));
+    }, [todoTitle, todoContent]);
 
     return (
         <TodoInputContainerStyle>
-            <form onSubmit={formSubmit}>
+            <Form onSubmit={formSubmit}>
+                <Form.Group controlId="todo-title">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" placeholder="Enter title" onChange={onTitleChange} value={todoTitle}/>
+                </Form.Group>
+                <Form.Group controlId="todo-content">
+                    <Form.Label>Content</Form.Label>
+                    <Form.Control as="textarea" placeholder="Enter content" onChange={onContentChange}
+                                  value={todoContent}/>
+                </Form.Group>
+                <DatePicker
+                    className="form-control"
+                    selected={todoDueTime}
+                    onChange={date => setTodoDueTime(date!)}
+                    showTimeInput
+                    disabledKeyboardNavigation
+                    dateFormat="yyyy MM dd h:mm aa"
+                    shouldCloseOnSelect={false}
+                />
                 <TodoInputFieldStyle>
-                    <label htmlFor={"todo-title"}>Title</label>
-                    <input type={"text"} name={"todo-title"} id={"todo-title"}
-                           className={isTitleValid ? '' : 'invalid'}
-                           onChange={onTitleChange} onKeyDown={handleEnter}/>
+                    <Button type="submit" disabled={!validityState}
+                            className={validityState ? '' : 'disabled'}>Add</Button>
                 </TodoInputFieldStyle>
-                <TodoInputFieldStyle>
-                    <label htmlFor={"todo-content"}>Content</label>
-                    <input type={"textarea"} name={"todo-content"} id={"todo-content"}
-                           className={isContentValid ? '' : 'invalid'}
-                           onChange={onContentChange} onKeyDown={handleEnter}/>
-                </TodoInputFieldStyle>
-                <TodoInputFieldStyle>
-                    <DatePicker
-                        selected={todoDueTime}
-                        onChange={date => setTodoDueTime(date!)}
-                        showTimeInput
-                        disabledKeyboardNavigation
-                        dateFormat="yyyy MM dd h:mm aa"
-                        shouldCloseOnSelect={false}
-                    />
-                </TodoInputFieldStyle>
-
-                <button type={"submit"} disabled={!validityState}>Add</button>
-            </form>
+            </Form>
         </TodoInputContainerStyle>
     );
 };

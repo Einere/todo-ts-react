@@ -1,9 +1,12 @@
 import * as React from 'react';
-import {FunctionComponent, useCallback, useMemo, useState} from 'react';
+import {FunctionComponent, useCallback, useState} from 'react';
 import {Todo} from "../todoTypes";
 import TodoItemStyle from './TodoItem.style';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfos, todoInfo, setTodoInfos, deleteTodoItem}) {
+    const [isDetail, setIsDetail] = useState<boolean>(false);
 
     const toggleDone = useCallback(() => {
         const newTodoInfos = [...todoInfos];
@@ -12,29 +15,30 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
         setTodoInfos(newTodoInfos);
     }, [todoInfos, todoInfo, setTodoInfos]);
 
-    const [isDetail, setIsDetail] = useState<boolean>(false);
-    const toggleIsDetail = useCallback((e) => {
-        if (e.target.tagName !== 'BUTTON') setIsDetail(!isDetail);
+    const toggleIsDetail = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        if (target.classList.contains('icon-container') || target.classList.contains('icon')) return;
+        setIsDetail(!isDetail);
     }, [isDetail]);
-
-    const expired = useMemo<boolean>(() => {
-        return todoInfo.dueTime.getTime() < Date.now();
-    }, [todoInfo.dueTime]);
 
     const onHandleDelete = function () {
         deleteTodoItem(todoInfo.id);
     };
 
     return (
-        <TodoItemStyle expired={expired} done={todoInfo.done} onClick={toggleIsDetail}>
+        <TodoItemStyle expired={todoInfo.dueTime.getTime() < Date.now()} done={todoInfo.done} onClick={toggleIsDetail}>
             <h3>{todoInfo.title}</h3>
             <p className={isDetail ? '' : 'invisible'}>{todoInfo.content}</p>
             <p>
                 <span className={isDetail ? '' : 'invisible'}>{todoInfo.createTime.toLocaleString()} / </span>
                 <span>{todoInfo.dueTime.toLocaleString()}</span>
             </p>
-            <button onClick={toggleDone}>done</button>
-            <button onClick={onHandleDelete}>delete</button>
+            <div className="icon-container" onClick={toggleDone}>
+                <FontAwesomeIcon icon={faCheck} className="icon done"/>
+            </div>
+            <div className="icon-container" onClick={onHandleDelete}>
+                <FontAwesomeIcon icon={faTrashAlt} className="icon delete"/>
+            </div>
         </TodoItemStyle>
     );
 };

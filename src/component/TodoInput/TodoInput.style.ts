@@ -8,10 +8,11 @@ export const TodoInputContainerStyle = styled.section`
     
     & form {
       margin: 1rem;
+      padding: 0 1rem;
       border-radius: 10px;
       border: 2px solid rgba(0, 0,0, 0.2);
       width: 50%;
-      transition: all 1s ease;
+      transition: all 0.5s ease;
       
       @media only screen and (max-width: 768px) {
         width: 80%;
@@ -42,6 +43,10 @@ export const TodoInputFieldStyle = styled.div`
       &.invalid {
         border: 1px solid red;
       }
+  }
+  
+  & button:disabled {
+    cursor: not-allowed;
   }
   
   & .rdt {
