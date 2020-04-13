@@ -46,6 +46,12 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         return isTitleValid && isContentValid;
     }, [isTitleValid, isContentValid]);
 
+    const clearForm = useCallback(() => {
+        setTodoTitle('');
+        setTodoContent('');
+        setTodoDueTime(new Date());
+    }, []);
+
     const formSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validityState) return;
@@ -53,6 +59,8 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         const nextId = getNextId(todoInfos);
         const newInfo = makeTodoInfo(nextId, todoTitle, todoContent, todoDueTime);
         setTodoInfos([...todoInfos, newInfo]);
+
+        clearForm();
     }, [todoInfos, setTodoInfos, todoTitle, todoContent, todoDueTime, validityState]);
 
     const onTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
