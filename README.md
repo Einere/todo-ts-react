@@ -1,10 +1,14 @@
 # TODO-TS-REACT
 
 ## About
-TODO-TS-REACT는 TypeScript를 이용하여 Todo React Web App입니다. 
+TODO-TS-REACT는 TypeScript와 React를 같이 사용해 보는 것을 경험해보기 위한 개인 토이 프로젝트입니다. 
 
-## Team
+## Skill
+- React
+- TypeScript
 
+## Structure
+별도의 서버가 없기 때문에, 로컬 환경일 경우 webpack-dev-server를 이용하며 container 환경일 경우 nginx를 이용합니다.
 
 ## Install & Run
 Using local file system
