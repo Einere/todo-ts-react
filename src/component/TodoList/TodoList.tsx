@@ -3,6 +3,7 @@ import {FunctionComponent} from 'react';
 import {Todo} from "../todoTypes";
 import {TodoItem} from "../TodoItem/TodoItem";
 import TodoListStyle from "./TodoList.style";
+import {EmptyTodoItem} from "../TodoItem/EmptyTodoItem";
 
 export const TodoList: FunctionComponent<Todo.TodoListProp> = function ({todoInfos, setTodoInfos, deleteTodoItem}) {
     const todoItems = todoInfos.map((info, i) => <TodoItem
@@ -14,7 +15,7 @@ export const TodoList: FunctionComponent<Todo.TodoListProp> = function ({todoInf
     />);
     return (
         <TodoListStyle>
-            {todoItems}
+            {todoInfos.length > 0 ? todoItems : <EmptyTodoItem todoInfos={todoInfos}/>}
         </TodoListStyle>
     );
 };

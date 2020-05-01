@@ -5,11 +5,27 @@ interface TodoItemStyleProps {
     readonly done: boolean;
 }
 
-export default styled.article<TodoItemStyleProps>`
+export const EmptyTodoItemStyle = styled.article`
+  width: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  transition: all 0.5s ease;
+  color: rgba(0, 0, 0, 0.5);
+  
+  @media only screen and (max-width: 768px) {
+    width: 80%;
+  }
+  
+  & > p {
+    margin: 0.5rem 0;
+  }
+`;
+
+export const TodoItemStyle = styled.article<TodoItemStyleProps>`
   width: 50%;
   border: 2px solid ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'};
   border-radius: 10px;
-  //box-shadow: 0.3rem 0.3rem 1rem ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'};
   margin: 0.5rem 0;
   transition: all 0.5s ease;
   
@@ -17,7 +33,15 @@ export default styled.article<TodoItemStyleProps>`
     width: 80%;
   }
   
-  & p.invisible, & span.invisible {
+  & p {
+    margin: 0.5rem 0;
+    
+    &.invisible {
+      display: none;
+    }
+  }
+  
+  & span.invisible {
     display: none;
   }
   
@@ -45,3 +69,4 @@ export default styled.article<TodoItemStyleProps>`
     }
   }
 `;
+
