@@ -10,23 +10,16 @@ export namespace Todo {
 
     export interface TodoInputProp {
         todoInfos: TodoInfoType[];
-        setTodoInfos: any;
+        setTodoInfos: (newTodoInfos: TodoInfoType[]) => void;
     }
 
-    export interface TodoListProp {
-        todoInfos: TodoInfoType[];
-        setTodoInfos: any;
-        deleteTodoItem: any;
+    export interface TodoListProp extends TodoInputProp {
+        deleteTodoItem: (id: TodoInfoType["id"]) => void;
     }
 
-    export interface TodoItemProp {
-        todoInfos: TodoInfoType[];
+    export interface TodoItemProp extends TodoListProp {
         todoInfo: TodoInfoType;
-        setTodoInfos: any;
-        deleteTodoItem: any;
     }
 
-    export interface TodoDetailType {
-
-    }
+    export type EmptyTodoItemProp = Pick<TodoInputProp, "todoInfos">;
 }
