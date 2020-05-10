@@ -7,23 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Button, Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function getNextId(todoInfos: Todo.TodoInfoType[]) {
-    return todoInfos.reduce((acc, {id}) => {
-        return acc < id ? id : acc;
-    }, -1) + 1;
-}
-
-function makeTodoInfo(id: number, title: string, content: string, dueTime: Date): Todo.TodoInfoType {
-    return {
-        id,
-        title,
-        content,
-        createTime: new Date(),
-        dueTime,
-        done: false,
-    };
-}
-
 const titleRegExp = new RegExp('[A-Za-z0-9ㄱ-ㅎㅏ-ㅣ가-힣 ]');
 const titleValidators = [
     (title: string) => title.length > 0,
@@ -35,7 +18,7 @@ const contentValidators = [
 ];
 
 
-export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoInfos, setTodoInfos}) {
+export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({addTodoItem}) {
     const [todoTitle, setTodoTitle] = useState<string>('');
     const [todoContent, setTodoContent] = useState<string>('');
     const [todoDueTime, setTodoDueTime] = useState<Date>(new Date());
@@ -52,16 +35,14 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
         setTodoDueTime(new Date());
     }, []);
 
-    const formSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
+    const onFormSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validityState) return;
 
-        const nextId = getNextId(todoInfos);
-        const newInfo = makeTodoInfo(nextId, todoTitle, todoContent, todoDueTime);
-        setTodoInfos([...todoInfos, newInfo]);
+        addTodoItem({title: todoTitle, content: todoContent, dueTime: todoDueTime});
 
         clearForm();
-    }, [todoInfos, setTodoInfos, todoTitle, todoContent, todoDueTime, validityState]);
+    }, [addTodoItem, clearForm, todoTitle, todoContent, todoDueTime, validityState]);
 
     const onTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const result = titleValidators.every(validator => validator(e.target.value));
@@ -84,7 +65,7 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({todoI
 
     return (
         <TodoInputContainerStyle>
-            <Form onSubmit={formSubmit}>
+            <Form onSubmit={onFormSubmit}>
                 <Form.Group controlId="todo-title">
                     <Form.Label>Title</Form.Label>
                     <Form.Control type="text" placeholder="Enter title" onChange={onTitleChange} value={todoTitle}/>

@@ -5,21 +5,18 @@ import {TodoItemStyle} from './TodoItem.style';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
-export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfos, todoInfo, setTodoInfos, deleteTodoItem}) {
+export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfo, deleteTodoItem, toggleDone}) {
     const [isDetail, setIsDetail] = useState<boolean>(false);
-
-    const toggleDone = useCallback(() => {
-        const newTodoInfos = [...todoInfos];
-        const i = newTodoInfos.findIndex((info) => info.id === todoInfo.id);
-        newTodoInfos[i].done = !newTodoInfos[i].done;
-        setTodoInfos(newTodoInfos);
-    }, [todoInfos, todoInfo, setTodoInfos]);
 
     const toggleIsDetail = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.target as HTMLElement;
         if (target.classList.contains('icon-container') || target.classList.contains('icon')) return;
         setIsDetail(!isDetail);
     }, [isDetail]);
+
+    const onHandleToggle = function () {
+        toggleDone(todoInfo.id);
+    };
 
     const onHandleDelete = function () {
         deleteTodoItem(todoInfo.id);
@@ -33,7 +30,7 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
                 <span className={isDetail ? '' : 'invisible'}>{todoInfo.createTime.toLocaleString()} / </span>
                 <span>{todoInfo.dueTime.toLocaleString()}</span>
             </p>
-            <div className="icon-container" onClick={toggleDone}>
+            <div className="icon-container" onClick={onHandleToggle}>
                 <FontAwesomeIcon icon={faCheck} className="icon done"/>
             </div>
             <div className="icon-container" onClick={onHandleDelete}>
