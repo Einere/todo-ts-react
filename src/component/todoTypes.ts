@@ -8,12 +8,16 @@ export namespace Todo {
         done: boolean;
     }
 
+    export type TodoInfoTypeForAdd = Pick<TodoInfoType, 'title' | 'content' | 'dueTime'>
+
     export interface TodoInputProp {
         todoInfos: TodoInfoType[];
         setTodoInfos: (newTodoInfos: TodoInfoType[]) => void;
+        addTodoItem: (todoInfo: TodoInfoTypeForAdd) => void;
     }
 
-    export interface TodoListProp extends TodoInputProp {
+    export interface TodoListProp extends Omit<TodoInputProp, 'addTodoItem'> {
+        toggleDone: (id: TodoInfoType["id"]) => void;
         deleteTodoItem: (id: TodoInfoType["id"]) => void;
     }
 

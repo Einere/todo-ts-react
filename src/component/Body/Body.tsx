@@ -7,6 +7,23 @@ import {Todo} from '../todoTypes';
 import {deepCopy} from '../../util/deepCopy';
 import {dbContext, todoCollectionName} from "../../context/DBContext";
 
+function getNextId(todoInfos: Todo.TodoInfoType[]) {
+    return todoInfos.reduce((acc, {id}) => {
+        return acc < id ? id : acc;
+    }, -1) + 1;
+}
+
+function makeTodoInfo(id: number, title: string, content: string, dueTime: Date): Todo.TodoInfoType {
+    return {
+        id,
+        title,
+        content,
+        createTime: new Date(),
+        dueTime,
+        done: false,
+    };
+}
+
 export const Body: FunctionComponent = function () {
     const db = useContext(dbContext);
     const todoDB = db.getCollection<Todo.TodoInfoType>(todoCollectionName);
@@ -18,6 +35,15 @@ export const Body: FunctionComponent = function () {
     });
 
     const [todoInfos, setTodoInfos] = useState<Todo.TodoInfoType[]>(todoDB.data);
+
+    const addTodoItem = useCallback(({title, content, dueTime}: Todo.TodoInfoTypeForAdd) => {
+        const nextId = getNextId(todoInfos);
+        const newInfo = makeTodoInfo(nextId, title, content, dueTime);
+        setTodoInfos([...todoInfos, newInfo]);
+
+        todoDB.insert(newInfo);
+        db.saveDatabase();
+    }, [todoInfos, setTodoInfos, db, todoDB]);
 
     const toggleDone = useCallback((id: number) => {
         const copiedTodoInfos = deepCopy<Todo.TodoInfoType[]>(todoInfos);
