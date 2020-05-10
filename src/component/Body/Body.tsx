@@ -78,11 +78,11 @@ export const Body: FunctionComponent = function () {
         <BodyStyle>
             <TodoInput
                 todoInfos={todoInfos}
-                setTodoInfos={setTodoInfos}
+                addTodoItem={addTodoItem}
             />
             <TodoList
                 todoInfos={todoInfos}
-                setTodoInfos={setTodoInfos}
+                toggleDone={toggleDone}
                 deleteTodoItem={deleteTodoItem}
             />
         </BodyStyle>

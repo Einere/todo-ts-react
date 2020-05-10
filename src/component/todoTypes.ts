@@ -12,7 +12,6 @@ export namespace Todo {
 
     export interface TodoInputProp {
         todoInfos: TodoInfoType[];
-        setTodoInfos: (newTodoInfos: TodoInfoType[]) => void;
         addTodoItem: (todoInfo: TodoInfoTypeForAdd) => void;
     }
 
