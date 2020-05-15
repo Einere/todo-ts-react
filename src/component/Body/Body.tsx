@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {FunctionComponent, useCallback, useContext, useState} from 'react';
 import BodyStyle from './Body.style';
+import {Todo} from "custom-types";
 import {TodoInput} from '../TodoInput/TodoInput';
 import {TodoList} from "../TodoList/TodoList";
-import {Todo} from '../todoTypes';
 import {deepCopy} from '../../util/deepCopy';
 import {dbContext, todoCollectionName} from "../../context/DBContext";
 

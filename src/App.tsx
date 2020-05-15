@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 import Home from "./page/Home/Home";
 import {db, dbContext, todoCollectionName} from "./context/DBContext";
-import {Todo} from './component/todoTypes';
+import {Todo} from 'custom-types';
 
 const App = () => {
     db.loadDatabase({});
