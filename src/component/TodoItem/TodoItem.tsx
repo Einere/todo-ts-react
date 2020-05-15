@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {FunctionComponent, useCallback, useState} from 'react';
-import {Todo} from "../todoTypes";
+import {Todo} from "custom-types";
 import {TodoItemStyle} from './TodoItem.style';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faTrashAlt} from "@fortawesome/free-solid-svg-icons";

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {FormEvent, FunctionComponent, useCallback, useEffect, useMemo, useState} from 'react';
-import {Todo} from '../todoTypes';
+import {Todo} from 'custom-types';
 import {TodoInputContainerStyle, TodoInputFieldStyle} from "./TodoInput.style";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
