@@ -23,7 +23,6 @@ export const Body: FunctionComponent = function () {
             <TodoList
                 todoInfos={todoInfos}
                 toggleDone={toggleDone}
-                addTodoItem={addTodoItem}
                 updateTodoItem={updateTodoItem}
                 deleteTodoItem={deleteTodoItem}
             />

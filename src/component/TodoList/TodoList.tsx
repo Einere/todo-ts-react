@@ -1,16 +1,15 @@
 import * as React from 'react';
 import {FunctionComponent} from 'react';
+import {Todo} from "custom-types";
 import {TodoItem} from "../TodoItem/TodoItem";
 import TodoListStyle from "./TodoList.style";
 import {EmptyTodoItem} from "../TodoItem/EmptyTodoItem";
-import {Todo} from "custom-types";
 
-export const TodoList: FunctionComponent<Todo.TodoListProp> = function ({todoInfos, toggleDone, addTodoItem, updateTodoItem, deleteTodoItem}) {
+export const TodoList: FunctionComponent<Todo.TodoListProp> = function ({todoInfos, toggleDone, updateTodoItem, deleteTodoItem}) {
     const todoItems = todoInfos.map((info, i) => <TodoItem
         key={i}
         todoInfo={info}
         toggleDone={toggleDone}
-        addTodoItem={addTodoItem}
         updateTodoItem={updateTodoItem}
         deleteTodoItem={deleteTodoItem}
     />);

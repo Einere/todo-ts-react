@@ -4,9 +4,9 @@ import {Todo} from "custom-types";
 import {TodoItemStyle} from './TodoItem.style';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import {TodoInput} from "../TodoInput/TodoInput";
+import {TodoUpdate} from "../TodoUpdate/TodoUpdate";
 
-export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfo, toggleDone, addTodoItem, updateTodoItem, deleteTodoItem}) {
+export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfo, toggleDone, updateTodoItem, deleteTodoItem}) {
     const [isDetail, setIsDetail] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<Boolean>(false);
 
@@ -25,7 +25,7 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
     };
 
     const onHandleUpdate = function (todoInfo: Todo.TodoInfoTypeForUpdate) {
-        if (updateTodoItem) updateTodoItem(todoInfo);
+        updateTodoItem(todoInfo);
         setIsEditing(false);
     };
 
@@ -40,9 +40,8 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
     return (
         <>
             {isEditing ?
-                <TodoInput
+                <TodoUpdate
                     defaultTodoItem={todoInfo}
-                    addTodoItem={addTodoItem}
                     updateTodoItem={onHandleUpdate}
                     cancelUpdateTodoItem={onCancelUpdate}
                 /> :

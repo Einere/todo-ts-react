@@ -13,13 +13,16 @@ declare module 'custom-types' {
         type TodoInfoTypeForUpdate = Pick<TodoInfoType, 'id' | 'title' | 'content' | 'dueTime'> & Partial<TodoInfoType>;
 
         interface TodoInputProp {
-            defaultTodoItem?: TodoInfoType;
             addTodoItem: (todoInfo: TodoInfoTypeForAdd) => void;
-            updateTodoItem?: (todoInfo: TodoInfoTypeForUpdate) => void;
+        }
+
+        interface TodoUpdateProp {
+            defaultTodoItem: TodoInfoType;
+            updateTodoItem: (todoInfo: TodoInfoTypeForUpdate) => void;
             cancelUpdateTodoItem?: () => void;
         }
 
-        interface TodoListProp extends TodoInputProp {
+        interface TodoListProp extends Omit<TodoUpdateProp, 'defaultTodoItem'> {
             todoInfos: TodoInfoType[];
             toggleDone: (id: TodoInfoType["id"]) => void;
             deleteTodoItem: (id: TodoInfoType["id"]) => void;
@@ -30,5 +33,10 @@ declare module 'custom-types' {
         }
 
         type EmptyTodoItemProp = Pick<TodoInputProp, "todoInfos">;
+
+        interface ValidatorOption {
+            defaultTodoItem?: TodoInfoType;
+            onHandleSubmit: (todoInfo: any) => void;
+        }
     }
 }

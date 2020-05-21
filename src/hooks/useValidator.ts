@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {FormEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import {Todo} from "custom-types";
 
 const titleRegExp = new RegExp('[A-Za-z0-9ㄱ-ㅎㅏ-ㅣ가-힣 ]');
 const titleValidators = [
@@ -11,7 +12,7 @@ const contentValidators = [
     (content: string) => content.length > 0,
 ];
 
-export function useValidator(defaultTodoItem: any, addTodoItem: any) {
+export function useValidator({defaultTodoItem, onHandleSubmit}: Todo.ValidatorOption) {
     const [todoTitle, setTodoTitle] = useState<string>(defaultTodoItem ? defaultTodoItem.title : '');
     const [todoContent, setTodoContent] = useState<string>(defaultTodoItem ? defaultTodoItem.content : '');
     const [todoDueTime, setTodoDueTime] = useState<Date>(defaultTodoItem ? defaultTodoItem.dueTime : new Date());
@@ -32,10 +33,21 @@ export function useValidator(defaultTodoItem: any, addTodoItem: any) {
         e.preventDefault();
         if (!validity) return;
 
-        addTodoItem({title: todoTitle, content: todoContent, dueTime: todoDueTime});
+        if (defaultTodoItem) {
+            onHandleSubmit({
+                id: defaultTodoItem.id,
+                title: todoTitle,
+                content: todoContent,
+                createTime: defaultTodoItem.createTime,
+                dueTime: todoDueTime
+            });
+        } else {
+            onHandleSubmit({title: todoTitle, content: todoContent, dueTime: todoDueTime});
+        }
+
 
         clearForm();
-    }, [addTodoItem, clearForm, todoTitle, todoContent, todoDueTime, validity]);
+    }, [defaultTodoItem, onHandleSubmit, clearForm, todoTitle, todoContent, todoDueTime, validity]);
 
     const onTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const result = titleValidators.every(validator => validator(e.target.value));

@@ -53,12 +53,11 @@ export function useDB() {
         setTodoInfos(copiedTodoInfos);
 
         todoDB.findAndUpdate({
-            id: id
+            'id': {
+                '$eq': id
+            }
         }, (todoInfo) => {
-            return {
-                ...todoInfo,
-                done: !todoInfo.done
-            };
+            todoInfo.done = !todoInfo.done;
         });
 
         db.saveDatabase();
@@ -68,14 +67,20 @@ export function useDB() {
         const copiedTodoInfos = deepCopy<Todo.TodoInfoType[]>(todoInfos);
         const indexForUpdate = copiedTodoInfos.findIndex((todoInfo) => todoInfo.id === newTodoItem.id);
 
-        copiedTodoInfos[indexForUpdate] = makeTodoInfo(newTodoItem);
+        const todoItemForUpdate = makeTodoInfo(newTodoItem);
+        copiedTodoInfos[indexForUpdate] = todoItemForUpdate;
         setTodoInfos(copiedTodoInfos);
 
         todoDB.findAndUpdate({
-            id: newTodoItem.id,
-        }, () => {
-
+            'id': {
+                '$eq': newTodoItem.id
+            }
+        }, (data) => {
+            data.title = todoItemForUpdate.title;
+            data.content = todoItemForUpdate.content;
+            data.dueTime = todoItemForUpdate.dueTime;
         });
+
         db.saveDatabase();
     }, [todoInfos, db, todoDB]);
 
