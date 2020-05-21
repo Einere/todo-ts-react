@@ -1,15 +1,12 @@
 import * as React from 'react';
 import {FunctionComponent} from 'react';
-import {Todo} from 'custom-types';
-import {TodoInputContainerStyle, TodoInputFieldStyle} from "./TodoInput.style";
+import {Todo} from "custom-types";
+import {Button, ButtonGroup, Form} from 'react-bootstrap';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import {Button, Form} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {TodoInputContainerStyle, TodoInputFieldStyle} from "../TodoInput/TodoInput.style";
 import {useValidator} from "../../hooks/useValidator";
 
-
-export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({addTodoItem}) {
+export const TodoUpdate: FunctionComponent<Todo.TodoUpdateProp> = function ({defaultTodoItem, updateTodoItem, cancelUpdateTodoItem}) {
     const {
         validity,
         todoTitle,
@@ -22,18 +19,19 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({addTo
         onTitleChange,
         onContentChange,
     } = useValidator({
-        onHandleSubmit: addTodoItem
+        defaultTodoItem,
+        onHandleSubmit: updateTodoItem,
     });
 
     return (
         <TodoInputContainerStyle>
             <Form onSubmit={onFormSubmit}>
-                <Form.Group controlId="todo-title">
+                <Form.Group controlId={`todo-title-${defaultTodoItem.id}`}>
                     <Form.Label>Title</Form.Label>
                     <Form.Control type="text" placeholder="Enter title" className={isTitleValid ? '' : 'invalid'}
                                   onChange={onTitleChange} value={todoTitle}/>
                 </Form.Group>
-                <Form.Group controlId="todo-content">
+                <Form.Group controlId={`todo-content-${defaultTodoItem.id}`}>
                     <Form.Label>Content</Form.Label>
                     <Form.Control as="textarea" placeholder="Enter content" className={isContentValid ? '' : 'invalid'}
                                   onChange={onContentChange}
@@ -49,8 +47,11 @@ export const TodoInput: FunctionComponent<Todo.TodoInputProp> = function ({addTo
                     shouldCloseOnSelect={false}
                 />
                 <TodoInputFieldStyle>
-                    <Button type="submit" disabled={!validity}
-                            className={validity ? '' : 'disabled'}>Add</Button>
+                    <ButtonGroup>
+                        <Button type="submit" disabled={!validity} className={validity ? '' : 'disabled'}
+                        >Update</Button>
+                        <Button type="button" variant="danger" onClick={cancelUpdateTodoItem}>Cancel</Button>
+                    </ButtonGroup>
                 </TodoInputFieldStyle>
             </Form>
         </TodoInputContainerStyle>
