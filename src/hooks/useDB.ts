@@ -9,14 +9,14 @@ function getNextId(todoInfos: Todo.TodoInfoType[]) {
     }, -1) + 1;
 }
 
-function makeTodoInfo(id: number, title: string, content: string, dueTime: Date): Todo.TodoInfoType {
+function makeTodoInfo({id, title, content, createTime, dueTime, done}: Todo.TodoInfoTypeForUpdate): Todo.TodoInfoType {
     return {
         id,
         title,
         content,
-        createTime: new Date(),
+        createTime: createTime ? createTime : new Date(),
         dueTime,
-        done: false,
+        done: done ? done : false,
     };
 }
 
@@ -34,7 +34,12 @@ export function useDB() {
 
     const addTodoItem = useCallback(({title, content, dueTime}: Todo.TodoInfoTypeForAdd) => {
         const nextId = getNextId(todoInfos);
-        const newInfo = makeTodoInfo(nextId, title, content, dueTime);
+        const newInfo = makeTodoInfo({
+            id: nextId,
+            title,
+            content,
+            dueTime
+        });
         setTodoInfos([...todoInfos, newInfo]);
 
         todoDB.insert(newInfo);
@@ -55,12 +60,29 @@ export function useDB() {
                 done: !todoInfo.done
             };
         });
+
         db.saveDatabase();
     }, [todoInfos, setTodoInfos, db, todoDB]);
+
+    const updateTodoItem = useCallback((newTodoItem: Todo.TodoInfoTypeForUpdate) => {
+        const copiedTodoInfos = deepCopy<Todo.TodoInfoType[]>(todoInfos);
+        const indexForUpdate = copiedTodoInfos.findIndex((todoInfo) => todoInfo.id === newTodoItem.id);
+
+        copiedTodoInfos[indexForUpdate] = makeTodoInfo(newTodoItem);
+        setTodoInfos(copiedTodoInfos);
+
+        todoDB.findAndUpdate({
+            id: newTodoItem.id,
+        }, () => {
+
+        });
+        db.saveDatabase();
+    }, [todoInfos, db, todoDB]);
 
     const deleteTodoItem = useCallback((id: number) => {
         const copiedTodoInfos = deepCopy<Todo.TodoInfoType[]>(todoInfos);
         const indexForRemove = copiedTodoInfos.findIndex((todoInfo) => todoInfo.id === id);
+
         copiedTodoInfos.splice(indexForRemove, 1);
         setTodoInfos(copiedTodoInfos);
 
@@ -73,8 +95,9 @@ export function useDB() {
     return {
         todoDB,
         todoInfos,
-        addTodoItem,
         toggleDone,
+        addTodoItem,
+        updateTodoItem,
         deleteTodoItem,
     }
 }
