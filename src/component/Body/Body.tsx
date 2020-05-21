@@ -9,20 +9,22 @@ import {useDB} from "../../hooks/useDB";
 export const Body: FunctionComponent = function () {
     const {
         todoInfos,
-        addTodoItem,
         toggleDone,
+        addTodoItem,
+        updateTodoItem,
         deleteTodoItem
     } = useDB();
 
     return (
         <BodyStyle>
             <TodoInput
-                todoInfos={todoInfos}
                 addTodoItem={addTodoItem}
             />
             <TodoList
                 todoInfos={todoInfos}
                 toggleDone={toggleDone}
+                addTodoItem={addTodoItem}
+                updateTodoItem={updateTodoItem}
                 deleteTodoItem={deleteTodoItem}
             />
         </BodyStyle>

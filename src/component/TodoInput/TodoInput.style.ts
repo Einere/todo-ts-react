@@ -18,8 +18,8 @@ export const TodoInputContainerStyle = styled.section`
         width: 80%;
       }
       
-      & input{
-        width: available;
+      & .invalid {
+        border: 1px solid red;
       }
     }
 `;
@@ -27,30 +27,9 @@ export const TodoInputContainerStyle = styled.section`
 export const TodoInputFieldStyle = styled.div`
   margin: 0.5rem;
   
-  
-  & label {
-      display: inline-flex;
-      box-sizing: border-box;
-      flex-direction: row-reverse;
-      width: 50%;
-      padding-right: 1vh;
-  }
-  
-  & input {
-      box-sizing: border-box;
-      width: 50%;
-      
-      &.invalid {
-        border: 1px solid red;
-      }
-  }
-  
-  & button:disabled {
-    cursor: not-allowed;
-  }
-  
-  & .rdt {
-    display: flex;
-    justify-content: center;
+  & button {
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 `;

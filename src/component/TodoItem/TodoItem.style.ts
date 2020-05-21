@@ -61,7 +61,11 @@ export const TodoItemStyle = styled.article<TodoItemStyleProps>`
     }
       
     & .done {
-      color: forestgreen;
+      color: mediumseagreen;
+    }
+    
+    & .update {
+      color: cornflowerblue;
     }
     
     & .delete {

@@ -5,12 +5,13 @@ import TodoListStyle from "./TodoList.style";
 import {EmptyTodoItem} from "../TodoItem/EmptyTodoItem";
 import {Todo} from "custom-types";
 
-export const TodoList: FunctionComponent<Todo.TodoListProp> = function ({todoInfos, deleteTodoItem, toggleDone}) {
+export const TodoList: FunctionComponent<Todo.TodoListProp> = function ({todoInfos, toggleDone, addTodoItem, updateTodoItem, deleteTodoItem}) {
     const todoItems = todoInfos.map((info, i) => <TodoItem
         key={i}
-        todoInfos={todoInfos}
         todoInfo={info}
         toggleDone={toggleDone}
+        addTodoItem={addTodoItem}
+        updateTodoItem={updateTodoItem}
         deleteTodoItem={deleteTodoItem}
     />);
     return (
