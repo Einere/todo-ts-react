@@ -1,4 +1,5 @@
 declare module 'custom-types' {
+    import {Dispatch, SetStateAction} from "react";
     export namespace Todo {
         interface TodoInfoType {
             id: number;
@@ -14,6 +15,18 @@ declare module 'custom-types' {
 
         interface TodoInputProp {
             addTodoItem: (todoInfo: TodoInfoTypeForAdd) => void;
+        }
+
+        interface TodoInputFormProp {
+            todoTitle: TodoInfoType['title'];
+            todoContent: TodoInfoType['content'];
+            todoDueTime: TodoInfoType['dueTime'];
+            setTodoDueTime: Dispatch<SetStateAction<TodoInfoType['dueTime']>>;
+            isTitleValid: boolean;
+            isContentValid: boolean;
+            onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+            onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+            onContentChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
         }
 
         interface TodoUpdateProp {

@@ -3,10 +3,12 @@ import {FunctionComponent, useCallback, useState} from 'react';
 import {Todo} from "custom-types";
 import {TodoItemStyle} from './TodoItem.style';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck, faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faCheckSquare, faSquare} from "@fortawesome/free-regular-svg-icons";
 import {TodoUpdate} from "../TodoUpdate/TodoUpdate";
 
 export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfo, toggleDone, updateTodoItem, deleteTodoItem}) {
+    const toLocaleStringOption = {hour12: false};
     const [isDetail, setIsDetail] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<Boolean>(false);
 
@@ -51,11 +53,14 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
                     <h3>{todoInfo.title}</h3>
                     <p className={isDetail ? '' : 'invisible'}>{todoInfo.content}</p>
                     <p>
-                        <span className={isDetail ? '' : 'invisible'}>{todoInfo.createTime.toLocaleString()} / </span>
-                        <span>{todoInfo.dueTime.toLocaleString()}</span>
+                        <span className={isDetail ? '' : 'invisible'}>
+                            {todoInfo.createTime.toLocaleString('ko-KR', toLocaleStringOption)}
+                        </span>
+                        <span className={isDetail ? '' : 'invisible'}> ~ </span>
+                        <span>{todoInfo.dueTime.toLocaleString('ko-KR', toLocaleStringOption)}</span>
                     </p>
                     <div className="icon-container" onClick={onHandleToggle}>
-                        <FontAwesomeIcon icon={faCheck} className="icon done"/>
+                        <FontAwesomeIcon icon={todoInfo.done ? faCheckSquare : faSquare} className="icon done"/>
                     </div>
                     <div className="icon-container" onClick={onHandleEdit}>
                         <FontAwesomeIcon icon={faEdit} className="icon update"/>
