@@ -3,7 +3,8 @@ import {FunctionComponent, useCallback, useState} from 'react';
 import {Todo} from "custom-types";
 import {TodoItemStyle} from './TodoItem.style';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck, faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faCheckSquare, faSquare} from "@fortawesome/free-regular-svg-icons";
 import {TodoUpdate} from "../TodoUpdate/TodoUpdate";
 
 export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInfo, toggleDone, updateTodoItem, deleteTodoItem}) {
@@ -55,7 +56,7 @@ export const TodoItem: FunctionComponent<Todo.TodoItemProp> = function ({todoInf
                         <span>{todoInfo.dueTime.toLocaleString()}</span>
                     </p>
                     <div className="icon-container" onClick={onHandleToggle}>
-                        <FontAwesomeIcon icon={faCheck} className="icon done"/>
+                        <FontAwesomeIcon icon={todoInfo.done ? faCheckSquare : faSquare} className="icon done"/>
                     </div>
                     <div className="icon-container" onClick={onHandleEdit}>
                         <FontAwesomeIcon icon={faEdit} className="icon update"/>

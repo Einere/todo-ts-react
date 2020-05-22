@@ -20,31 +20,14 @@ export const EmptyTodoItemStyle = styled.article`
   & > p {
     margin: 0.5rem 0;
   }
-`;
-
-export const TodoItemStyle = styled.article<TodoItemStyleProps>`
-  width: 80%;
-  border: 2px solid ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'};
-  border-radius: 10px;
-  margin: 0.5rem 0;
-  padding: 0.5rem 0;
-  transition: all 0.5s ease;
   
-  @media only screen and (min-width: 769px) {
-    width: 50%;
-  }
-  
-  & p {
-    margin: 0.5rem 0;
-    
-    &.invisible {
-      display: none;
-    }
-  }
-  
-  & span.invisible {
+  & .invisible {
     display: none;
   }
+`;
+
+export const TodoItemStyle = styled(EmptyTodoItemStyle)<TodoItemStyleProps>`
+  color: black;
   
   & .icon-container {
     display: inline-flex;
@@ -62,7 +45,8 @@ export const TodoItemStyle = styled.article<TodoItemStyleProps>`
     }
       
     & .done {
-      color: mediumseagreen;
+      transition: color 0.5s ease;
+      color : ${props => props.done ? 'mediumseagreen' : props.expired ? 'red' : 'rgba(0, 0, 0, 0.5)'};
     }
     
     & .update {
