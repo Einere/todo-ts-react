@@ -29,6 +29,16 @@ export const EmptyTodoItemStyle = styled.article`
 export const TodoItemStyle = styled(EmptyTodoItemStyle)<TodoItemStyleProps>`
   color: black;
   
+  & span {
+    display: block;
+  }
+  
+  @media only screen and (min-width: 769px) {
+    & span {
+      display: inline;
+    }
+  }
+  
   & .icon-container {
     display: inline-flex;
     width: 2rem;
