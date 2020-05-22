@@ -6,15 +6,15 @@ interface TodoItemStyleProps {
 }
 
 export const EmptyTodoItemStyle = styled.article`
-  width: 50%;
+  width: 80%;
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin: 0.5rem 0;
   transition: all 0.5s ease;
   color: rgba(0, 0, 0, 0.5);
   
-  @media only screen and (max-width: 768px) {
-    width: 80%;
+  @media only screen and (min-width: 769px) {
+    width: 50%;
   }
   
   & > p {
@@ -23,14 +23,15 @@ export const EmptyTodoItemStyle = styled.article`
 `;
 
 export const TodoItemStyle = styled.article<TodoItemStyleProps>`
-  width: 50%;
+  width: 80%;
   border: 2px solid ${props => props.done ? '#77dd77' : props.expired ? '#ff6961' : '#696969'};
   border-radius: 10px;
   margin: 0.5rem 0;
+  padding: 0.5rem 0;
   transition: all 0.5s ease;
   
-  @media only screen and (max-width: 768px) {
-    width: 80%;
+  @media only screen and (min-width: 769px) {
+    width: 50%;
   }
   
   & p {
