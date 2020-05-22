@@ -3,7 +3,7 @@ import {FunctionComponent} from 'react';
 import {Todo} from "custom-types";
 import {TodoInputContainerStyle} from "../TodoInput/TodoInput.style";
 import {useValidator} from "../../hooks/useValidator";
-import {TodoInputForm} from "../TodoInput/TodoInputForm";
+import {TodoInputForm} from "../TodoInputForm/TodoInputForm";
 import {Button, ButtonGroup} from 'react-bootstrap';
 
 export const TodoUpdate: FunctionComponent<Todo.TodoUpdateProp> = function ({defaultTodoItem, updateTodoItem, cancelUpdateTodoItem}) {

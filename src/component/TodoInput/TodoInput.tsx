@@ -5,7 +5,7 @@ import {TodoInputContainerStyle} from "./TodoInput.style";
 import "react-datepicker/dist/react-datepicker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useValidator} from "../../hooks/useValidator";
-import {TodoInputForm} from "./TodoInputForm";
+import {TodoInputForm} from "../TodoInputForm/TodoInputForm";
 import {Button} from "react-bootstrap";
 
 
