@@ -13,6 +13,9 @@ todo-ts-react는 TypeScript와 React를 같이 사용해 보는 것을 경험해
 - styled-components
 - Loki.js
 
+### DevOps
+- Docker
+
 ## Architecture
 data fetch를 위한 서버는 따로 구성하지 않았으며, in-memory DB를 사용하였습니다.   
 로컬 환경일 경우 webpack-dev-server를 이용하며 container 환경일 경우 nginx를 이용합니다.
